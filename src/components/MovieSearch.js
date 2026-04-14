@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 export default function MovieSearch() {
   const apiEndpoint = "https://www.omdbapi.com/?apikey=b2cff54a";
@@ -24,7 +24,7 @@ export default function MovieSearch() {
     }
   };
 
-  const displayMovies = async () => {
+  const displayMovies = useCallback(async () => {
     if (searchQuery) {
       const payload = await getMovies(searchQuery);
       if (!payload || !payload.Search) {
@@ -39,11 +39,11 @@ export default function MovieSearch() {
       });
       setMovies(sortedMovies);
     }
-  };
+  }, [searchQuery, sortBy]);
 
   useEffect(() => {
     displayMovies();
-  }, [searchQuery, sortBy]); // Re-run when searchQuery or sortBy changes
+  }, [displayMovies]); // Re-run when searchQuery or sortBy changes
 
   return (
     <div>
