@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 
 export default function MovieSearch() {
   const apiEndpoint = "https://www.omdbapi.com/?apikey=b2cff54a";
@@ -67,18 +68,24 @@ export default function MovieSearch() {
       {error && <p className="error">{error}</p>}
       <div className="movies-grid">
         {movies.map((movie) => (
-          <div className="movie-card" key={movie.imdbID}>
-            <img
-              src={movie.Poster}
-              alt={movie.Title}
-              className="movie-poster"
-            />
-            <div className="movie-info">
-              <h3 className="movie-title">{movie.Title}</h3>
-              <p className="movie-year">Year: {movie.Year}</p>
-              <p className="movie-type">Type: {movie.Type}</p>
+          <Link
+            to={`/movie/${movie.imdbID}`}
+            key={movie.imdbID}
+            className="movie-link"
+          >
+            <div className="movie-card">
+              <img
+                src={movie.Poster}
+                alt={movie.Title}
+                className="movie-poster"
+              />
+              <div className="movie-info">
+                <h3 className="movie-title">{movie.Title}</h3>
+                <p className="movie-year">Year: {movie.Year}</p>
+                <p className="movie-type">Type: {movie.Type}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
