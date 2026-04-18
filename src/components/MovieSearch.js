@@ -46,33 +46,38 @@ export default function MovieSearch() {
   }, [displayMovies]); // Re-run when searchQuery or sortBy changes
 
   return (
-    <div>
-      <input
-        type="text"
-        id="search"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search for movies..."
-      />
-      <select
-        id="sort"
-        value={sortBy}
-        onChange={(e) => setSortBy(e.target.value)}
-      >
-        <option value="title">Sort by Title</option>
-        <option value="year">Sort by Year</option>
-      </select>
-      {error && <p>{error}</p>}
-      <div id="search-input">
+    <div className="movie-search">
+      <div className="filters">
+        <input
+          type="text"
+          id="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for movies..."
+        />
+        <select
+          id="sort"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="title">Sort by Title</option>
+          <option value="year">Sort by Year</option>
+        </select>
+      </div>
+      {error && <p className="error">{error}</p>}
+      <div className="movies-grid">
         {movies.map((movie) => (
-          <div className="container" key={movie.imdbID}>
-            <p>Title: {movie.Title}</p>
-            <p>Year: {movie.Year}</p>
-            <p>ImdbID: {movie.imdbID}</p>
-            <p>Type: {movie.Type}</p>
-            <p>
-              Poster: <img src={movie.Poster} alt={movie.Title} />
-            </p>
+          <div className="movie-card" key={movie.imdbID}>
+            <img
+              src={movie.Poster}
+              alt={movie.Title}
+              className="movie-poster"
+            />
+            <div className="movie-info">
+              <h3 className="movie-title">{movie.Title}</h3>
+              <p className="movie-year">Year: {movie.Year}</p>
+              <p className="movie-type">Type: {movie.Type}</p>
+            </div>
           </div>
         ))}
       </div>
